@@ -1,0 +1,18 @@
+{
+  "name": "qj-blog",
+  "version": "1.0.0",
+  "description": "QJ's Blog",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "new": "node scripts/new-post.js",
+    "preview": "vitepress preview"
+  },
+  "keywords": [],
+  "author": "QJ",
+  "license": "ISC",
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}
