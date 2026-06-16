@@ -8,6 +8,6 @@ export default createContentLoader('posts/*.md', {
         url: page.url,
         date: page.frontmatter.date || '',
       }))
-      .sort((a, b) => b.date.localeCompare(a.date))
+      .sort((a, b) => String(b.date).localeCompare(String(a.date)))
   },
 })

@@ -1,11 +1,71 @@
 /* ===== 主题色 ===== */
-/* 主色改成蓝紫色，可以换成你喜欢的任何颜色 */
 :root {
   --vp-c-brand-1: #5c6ac4;
   --vp-c-brand-2: #7c8ada;
   --vp-c-brand-3: #4a56b0;
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: linear-gradient(135deg, #5c6ac4 20%, #e8917a 80%);
+}
+
+/* ===== 流动渐变背景 ===== */
+@keyframes gradientFlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body {
+  background: linear-gradient(270deg, #f0e6ff, #e6f2ff, #e6fffa, #fff5e6, #ffe6f0);
+  background-size: 400% 400%;
+  animation: gradientFlow 20s ease infinite;
+}
+
+/* 背景伪元素确保全屏覆盖 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: inherit;
+  background-size: inherit;
+  animation: inherit;
+  z-index: -1;
+}
+
+/* 背景漂浮光斑 */
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.1); }
+}
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-30px, 40px) scale(1.15); }
+}
+@keyframes floatOrb3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, 20px) scale(1.08); }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  opacity: 0.4;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(92, 106, 196, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 85% 75%, rgba(232, 145, 122, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(120, 200, 180, 0.1) 0%, transparent 50%);
+  width: 100%;
+  height: 100%;
+  animation: floatOrb1 15s ease-in-out infinite;
+}
+
+/* 首页Hero区域完全透明，显示流动背景 */
+.VPHero {
+  background: transparent !important;
+}
+.VPHome {
+  background: transparent !important;
 }
 
 /* 首页标题渐变色 */
@@ -16,13 +76,61 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* ===== 正文字体大小 ===== */
+/* 首页tagline排版优化 */
+.VPHero .text {
+  font-size: 1.25rem !important;
+  font-weight: 450 !important;
+  letter-spacing: 0.06em;
+  color: var(--vp-c-text-1) !important;
+  text-shadow: 0 1px 8px rgba(255,255,255,0.6), 0 0 1px rgba(0,0,0,0.08);
+}
+.VPHero .text::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--vp-c-brand-1);
+  margin: 16px auto 0;
+  opacity: 0.6;
+  border-radius: 1px;
+}
+
+/* 按钮悬浮动画 */
+.VPHero .actions .VPButton {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.VPHero .actions .VPButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(92, 106, 196, 0.3);
+}
+.VPHero .actions .VPButton.alt:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* 首页标题字重增强 */
+.VPHero .name {
+  font-weight: 800 !important;
+  letter-spacing: 0.04em;
+}
+
+/* 内容区域也全透明，流动背景贯穿所有页面 */
+.VPDoc {
+  background: transparent !important;
+}
+
+/* 导航栏半透明 */
+.VPNav {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(12px);
+}
+
+/* ===== 正文字体 ===== */
 .content {
   font-size: 15px;
   line-height: 1.8;
 }
 
-/* ===== 链接颜色 ===== */
+/* ===== 链接 ===== */
 .vp-doc a {
   color: var(--vp-c-brand-1);
   text-decoration: none;
@@ -32,10 +140,28 @@
   color: var(--vp-c-brand-2);
 }
 
-/* ===== 文章卡片感 ===== */
+/* ===== 文章标题 ===== */
 .vp-doc h2 {
   margin-top: 2em;
   padding-top: 0.5em;
+}
+
+/* ===== 暗色模式 ===== */
+.dark body {
+  background: linear-gradient(270deg, #1a1025, #0f1a2e, #0f2e2e, #1e1a10, #1e1020);
+  background-size: 400% 400%;
+}
+.dark .VPHero {
+  background: transparent !important;
+}
+.dark .VPHome {
+  background: transparent !important;
+}
+.dark .VPDoc {
+  background: transparent !important;
+}
+.dark .VPNav {
+  background: rgba(30, 30, 30, 0.7) !important;
 }
 
 /* ===== 代码块圆角 ===== */
