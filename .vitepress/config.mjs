@@ -4,6 +4,7 @@ export default defineConfig({
   title: 'QJ',
   description: 'QJ的个人博客',
   lang: 'zh-CN',
+  base: '/qj-blog/',
   cleanUrls: true,
 
   themeConfig: {

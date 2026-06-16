@@ -13,6 +13,7 @@
   "author": "QJ",
   "license": "ISC",
   "devDependencies": {
+    "vercel": "^54.14.0",
     "vitepress": "^1.6.4"
   }
 }
