@@ -1,0 +1,45 @@
+/* ===== 主题色 ===== */
+/* 主色改成蓝紫色，可以换成你喜欢的任何颜色 */
+:root {
+  --vp-c-brand-1: #5c6ac4;
+  --vp-c-brand-2: #7c8ada;
+  --vp-c-brand-3: #4a56b0;
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(135deg, #5c6ac4 20%, #e8917a 80%);
+}
+
+/* 首页标题渐变色 */
+.VPHero .name .clip {
+  background: linear-gradient(135deg, #5c6ac4 20%, #e8917a 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== 正文字体大小 ===== */
+.content {
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* ===== 链接颜色 ===== */
+.vp-doc a {
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.vp-doc a:hover {
+  color: var(--vp-c-brand-2);
+}
+
+/* ===== 文章卡片感 ===== */
+.vp-doc h2 {
+  margin-top: 2em;
+  padding-top: 0.5em;
+}
+
+/* ===== 代码块圆角 ===== */
+.vp-code-group .blocks,
+div[class*='language-'] {
+  border-radius: 8px;
+}
