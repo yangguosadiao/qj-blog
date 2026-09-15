@@ -68,7 +68,7 @@ function slugifyRaw(name) {
 /* ===== GitHub API ===== */
 async function gh(path, opts = {}) {
   const headers = {
-    Authorization: `Bearer ${pat.value}`,
+    Authorization: `Bearer ${pat.value.trim()}`,
     Accept: 'application/vnd.github+json',
   }
   if (opts.body) headers['Content-Type'] = 'application/json'
@@ -301,6 +301,7 @@ async function savePost() {
 
 /* ===== PAT 保存 ===== */
 function savePat() {
+  pat.value = pat.value.trim()
   localStorage.setItem('qjblog_pat', pat.value)
   patSaved.value = true
   status.value = 'GitHub 令牌已保存到本浏览器。'
