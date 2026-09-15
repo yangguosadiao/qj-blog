@@ -85,8 +85,18 @@ async function getFile(path) {
   return res.json()
 }
 async function putFile(path, contentB64, message, sha) {
+  // 若未提供 sha（首次保存 / 登录时令牌未就绪导致缓存缺失 / 并发被改），
+  // 先读取当前文件拿到 sha，避免 GitHub 返回 422 "sha wasn't supplied."。
+  // 文件不存在（404）则视为新建，不带 sha。
+  let useSha = sha
+  if (!useSha) {
+    try {
+      const cur = await getFile(path)
+      if (cur && cur.sha) useSha = cur.sha
+    } catch (e) { /* 读不到 sha 时走新建/报错逻辑 */ }
+  }
   const body = { message, content: contentB64, branch: BRANCH }
-  if (sha) body.sha = sha
+  if (useSha) body.sha = useSha
   const res = await gh('/' + path, { method: 'PUT', body: JSON.stringify(body) })
   return res.json()
 }
@@ -305,6 +315,7 @@ function savePat() {
   localStorage.setItem('qjblog_pat', pat.value)
   patSaved.value = true
   status.value = 'GitHub 令牌已保存到本浏览器。'
+  loadCategories() // 保存令牌后立即刷新分类列表与文件 sha，避免之后保存分区时 422
 }
 function forgetPat() {
   localStorage.removeItem('qjblog_pat')
