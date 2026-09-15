@@ -113,7 +113,7 @@ watch(authed, async (v) => {
   if (v) {
     await nextTick()
     await initEditor()
-    loadCategories()
+    await loadCategories()
   }
 })
 async function initEditor() {
@@ -168,7 +168,8 @@ async function loadCategories() {
 }
 async function saveCategories() {
   const b64 = b64Encode(JSON.stringify(categories, null, 2))
-  catSha = (await putFile('categories.json', b64, 'update categories', catSha)).content?.sha || catSha
+  const r = await putFile('categories.json', b64, 'update categories', catSha)
+  catSha = r.content?.sha || catSha
 }
 function addCategory() {
   const name = prompt('请输入新分区（分类）名称：')
@@ -178,14 +179,26 @@ function addCategory() {
     alert('该分区已存在')
     return
   }
+  if (!pat.value) {
+    alert('请先在右上角填写并保存 GitHub 令牌(PAT)再新建分区。')
+    return
+  }
   categories.push({ slug, name })
   saveCategories()
+    .then(() => { status.value = '✅ 分区已保存，GitHub Actions 正在重新部署，约 1-2 分钟后所有人可见。' })
+    .catch((e) => { status.value = '分区保存失败：' + e.message })
 }
 function delCategory(slug) {
   if (!confirm('确定删除该分区？已发布文章的分区标记不会自动改动。')) return
+  if (!pat.value) {
+    alert('请先在右上角填写并保存 GitHub 令牌(PAT)再删除分区。')
+    return
+  }
   const i = categories.findIndex((c) => c.slug === slug)
   if (i >= 0) categories.splice(i, 1)
   saveCategories()
+    .then(() => { status.value = '✅ 分区已删除，重新部署后生效。' })
+    .catch((e) => { status.value = '分区删除失败：' + e.message })
 }
 
 /* ===== 文章 ===== */
