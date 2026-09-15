@@ -5,7 +5,7 @@ import categoriesRaw from '../../../categories.json'
 const categories = (categoriesRaw || []).map((c) => ({
   ...c,
   posts: posts.filter((p) => p.category === c.slug),
-})).filter((c) => c.posts.length > 0)
+}))
 </script>
 
 <template>
@@ -13,12 +13,13 @@ const categories = (categoriesRaw || []).map((c) => ({
     <p v-if="categories.length === 0" class="empty">还没有任何分区。管理员可在「管理后台」创建分区。</p>
     <section v-for="c in categories" :key="c.slug" class="cat-block">
       <h2 class="cat-name">{{ c.name }} <span class="count">{{ c.posts.length }}</span></h2>
-      <ul class="cat-items">
+      <ul v-if="c.posts.length" class="cat-items">
         <li v-for="p in c.posts" :key="p.url">
           <a :href="p.url">{{ p.title }}</a>
           <span class="date">{{ p.date }}</span>
         </li>
       </ul>
+      <p v-else class="empty-cat">暂无文章</p>
     </section>
   </div>
 </template>
@@ -34,4 +35,5 @@ const categories = (categoriesRaw || []).map((c) => ({
 .cat-items a:hover { color: var(--vp-c-brand-1); }
 .date { color: var(--vp-c-text-2); font-size: 0.85em; }
 .empty { text-align: center; color: var(--vp-c-text-2); padding: 40px 0; }
+.empty-cat { color: var(--vp-c-text-2); font-size: 0.9em; padding: 4px 0; }
 </style>
