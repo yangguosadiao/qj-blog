@@ -11,7 +11,9 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '文章', link: '/posts/' },
+      { text: '分类', link: '/categories' },
       { text: '关于', link: '/about' },
+      { text: '管理', link: '/admin' },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com' },
